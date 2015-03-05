@@ -25,7 +25,6 @@ Library.prototype.do = function(deps, injections, func) {
 
 picture.out("Library", function(it, expect) {
   it("passes data to a function's dependencies when you call it", function() {
-
     var library = new Library()
 
     var hostFromInside
@@ -57,6 +56,24 @@ picture.out("Library", function(it, expect) {
       sandwichFromInside = sandwich
     })
     expect(sandwichFromInside).to.equal("yummy")
+  })
+})
+
+picture.out("... running a test", function(it, expect) {
+  library = new Library()
+  library.describe("hatchery", [], function() { return "pengwings"})
+  var report = library.test()
+  // var report = library.test("Hatching", ["it", "hatchery", "expect"], 
+  //  function(it, hatchery, expect) {
+  //   it("hatches pengwings", function() {
+  //     expect(hatchery()).to.equal("pengwings")
+  //   })
+  // })
+
+  it("tests for pengwings", function() {
+    expect(report.tests).to.have.length(1)
+    expect(report.tests[0].description).to.equal("hatches pengwings")
+    expect(reports.tests[0].success).to.be.true
   })
 })
 
