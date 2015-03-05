@@ -1,4 +1,5 @@
-var expect = require("chai").expect
+var picture = require("./picture")
+
 function Library() {
   this.libs = {}
 }
@@ -22,7 +23,7 @@ Library.prototype.do = function(deps, injections, func) {
   func.apply({}, args)
 }
 
-describe("Library", function() {
+picture.out("Library", function(it, expect) {
   it("passes data to a function's dependencies when you call it", function() {
 
     var library = new Library()

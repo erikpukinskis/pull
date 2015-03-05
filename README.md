@@ -1,4 +1,4 @@
 # Running tests
 
     npm install
-    mocha
+    node bounty.js

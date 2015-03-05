@@ -41,10 +41,11 @@ picture.out = function() {
       console.log("   " + test.stack)
     }
   })
+  return report
 }
 
 
-picture.out("a test that fails", function(it, expect) {
+picture.out("Picture handles tests that fail", function(it, expect) {
   var report = testReport("throws an error", function() { 
     throw new Error("oops") 
   })
@@ -62,7 +63,7 @@ picture.out("a test that fails", function(it, expect) {
   })
 })
 
-picture.out("a test that passes", function(it, expect) {
+picture.out("... and those that succeed", function(it, expect) {
   var report = testReport("passes", function() { 
   })
 
@@ -71,7 +72,7 @@ picture.out("a test that passes", function(it, expect) {
   })
 })
 
-picture.out("different it blocks", function(it, expect) {
+picture.out("... and different it blocks", function(it, expect) {
   var report = picture("a sandwich", function(it) {
     var sandwich = {ingredients: ["avocado"]}
     it("has one ingredient", function() {

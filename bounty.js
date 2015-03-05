@@ -1,6 +1,7 @@
 var Library = require("./library")
+var picture = require("./picture")
 
-describe("Bounty", function() {
+picture.out("Bounty", function(it, expect) {
   it("can tap a button", function() {
     var library = new Library()
 
