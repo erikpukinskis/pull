@@ -5,6 +5,5 @@
 
 # Todo
 
- - [ ] Stop using commonjs except in test.js and library.js
- - [ ] Logger injection
+ - [ ] Injection instead of extra picture.out for test output
  - [ ] Get tests to run in web page

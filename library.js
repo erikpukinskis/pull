@@ -1,6 +1,7 @@
 var picture = require("./picture")
 
 function Library() {
+  this.id = Math.floor(Math.random()*100)
   this.libs = {}
 }
 Library.prototype.describe = function(name, deps, func) {
@@ -13,7 +14,13 @@ Library.prototype.do = function(deps, injections, func) {
   var args = []
   for(var i=0; i<deps.length; i++) {
     var dep = deps[i]
-    var arg = this.libs[dep]()
+
+    if (this.libs[dep]) { 
+      var arg = this.libs[dep]()
+    } else {
+      var arg = require("./"+dep)
+    }
+
     for (key in injections[dep] || {}) {
       arg[key] = injections[dep][key]
     }
@@ -87,6 +94,16 @@ picture(" ..running a test", function(it, expect) {
 
   it("knows it was pengwings", function() {
     expect(report.tests[0].description).to.equal("hatches pengwings")
+  })
+})
+
+picture.out(" ..falling back to local files", function(it, expect) {
+  library = new Library()
+
+  it('should require ./whatever', function() {
+    library.do(['picture'], {}, function(pic) {
+      expect(pic).to.be.defined
+    })    
   })
 })
 
