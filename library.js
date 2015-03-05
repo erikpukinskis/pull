@@ -1,4 +1,4 @@
-var expect = require('chai').expect
+var expect = require("chai").expect
 function Library() {
   this.libs = {}
 }
@@ -19,15 +19,15 @@ Library.prototype.call = function(name, deps, injections) {
   this.libs[name].apply({}, args)
 }
 
-describe('a library with a library in it', function() {
+describe("a library with a library in it", function() {
   it("pass data to a function's dependencies when you call it", function() {
 
     var library = new Library()
 
-    library.describe('test-1', ['phone'], function(phone) {
-      expect(phone.host).to.equal('birdland:')
+    library.describe("test-1", ["phone"], function(phone) {
+      expect(phone.host).to.equal("birdland:")
     })
 
-    library.call('test-1', ['phone'], {phone: {host: 'birdland:'}})
+    library.call("test-1", ["phone"], {phone: {host: "birdland:"}})
   })
 })
