@@ -32,20 +32,27 @@ function picture(suiteDescription, suite) {
   return report
 }
 
+function render(test, depth, successColor) {
+  var spaces = new Array(depth+1).join("  ")
+  console.log((spaces + test.description)[test.success ? successColor : 'red'])
+  if (!test.success) {
+    console.log(spaces + " " + test.stack)
+  }
+}
+picture.renderReport = function(report) {
+  render(report, 0, 'white')
+  report.tests.forEach(function(test) {
+    render(test, 1, 'green')
+  })
+}
 picture.out = function() {
   report = picture.apply({}, arguments)
-  console.log(report.description)
-  report.tests.forEach(function(test) {
-    console.log(("  " + test.description)[test.success ? 'green' : 'red'])
-    if (!test.success) {
-      console.log("   " + test.stack)
-    }
-  })
+  picture.renderReport(report)
   return report
 }
 
 
-picture.out("Picture handles tests that fail", function(it, expect) {
+picture("Picture handles tests that fail", function(it, expect) {
   var report = testReport("throws an error", function() { 
     throw new Error("oops") 
   })
@@ -63,7 +70,7 @@ picture.out("Picture handles tests that fail", function(it, expect) {
   })
 })
 
-picture.out("... and those that succeed", function(it, expect) {
+picture(" ..and those that succeed", function(it, expect) {
   var report = testReport("passes", function() { 
   })
 
@@ -72,7 +79,7 @@ picture.out("... and those that succeed", function(it, expect) {
   })
 })
 
-picture.out("... and different it blocks", function(it, expect) {
+picture(" ..and different it blocks", function(it, expect) {
   var report = picture("a sandwich", function(it) {
     var sandwich = {ingredients: ["avocado"]}
     it("has one ingredient", function() {
