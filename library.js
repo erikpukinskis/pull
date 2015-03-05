@@ -22,7 +22,7 @@ Library.prototype.do = function(deps, injections, func) {
   func.apply({}, args)
 }
 
-describe("a library with a library in it", function() {
+describe('Library', function() {
   it("passes data to a function's dependencies when you call it", function() {
 
     var library = new Library()
@@ -57,21 +57,6 @@ describe("a library with a library in it", function() {
     })
     expect(sandwichFromInside).to.equal("yummy")
   })
-
-  it.skip("can describe Bounty", function() {
-    var library = new Library()
-
-    library.describe("phone", [], function() {
-      function Phone() {}
-      Phone.prototype.tap = function() {
-      }
-      return Phone
-    })
-
-    library.do(["phone"], {}, function(Phone) {
-      var bobby = new Phone("Bobby's phone")
-      bobby.tap("hello")
-    })
-  })
 })
 
+module.exports = Library
