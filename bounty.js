@@ -1,6 +1,6 @@
 var Library = require("./library")
 
-describe.skip("Bounty", function() {
+describe("Bounty", function() {
   it("can tap a button", function() {
     var library = new Library()
 

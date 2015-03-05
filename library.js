@@ -22,7 +22,7 @@ Library.prototype.do = function(deps, injections, func) {
   func.apply({}, args)
 }
 
-describe('Library', function() {
+describe("Library", function() {
   it("passes data to a function's dependencies when you call it", function() {
 
     var library = new Library()
