@@ -12,7 +12,7 @@ Library.prototype.do = function(deps, injections, func) {
   var args = []
   for(var i=0; i<deps.length; i++) {
     var dep = deps[i]
-    var arg = this.libs[dep]
+    var arg = this.libs[dep]()
     for (key in injections[dep] || {}) {
       arg[key] = injections[dep][key]
     }
@@ -29,7 +29,7 @@ describe('Library', function() {
 
     var hostFromInside
 
-    library.describe("phone", [], {})
+    library.describe("phone", [], function() { return {}})
     library.describe("test-1", ["phone"], function(phone) {
       hostFromInside = phone.host
     })
@@ -50,7 +50,7 @@ describe('Library', function() {
 
   it("passes in dependencies", function() {
     library = new Library()
-    library.describe("sandwich", [], "yummy")
+    library.describe("sandwich", [], function() { return "yummy" })
     var sandwichFromInside
     library.do(["sandwich"], {}, function(sandwich) {
       sandwichFromInside = sandwich
