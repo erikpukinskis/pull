@@ -1,4 +1,4 @@
-var picture = require('./picture')
+var picture = require("./picture")
 
 library.describe("phone", [], function() {
   function Phone() {}
@@ -7,7 +7,7 @@ library.describe("phone", [], function() {
   return Phone
 })
 
-var report = library.test("Phone", ['phone', 'it', 'expect'], function(Phone, it, expect) {
+var report = library.test("Phone", ["phone", "it", "expect"], function(Phone, it, expect) {
   it("can tap a button", function() {
     var bobby = new Phone("Bobby's phone")
     bobby.tap("hello")
