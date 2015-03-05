@@ -20,14 +20,18 @@ Library.prototype.call = function(name, deps, injections) {
 }
 
 describe("a library with a library in it", function() {
-  it("pass data to a function's dependencies when you call it", function() {
+  it("passes data to a function's dependencies when you call it", function() {
 
     var library = new Library()
 
+    var hostFromInside
+
     library.describe("test-1", ["phone"], function(phone) {
-      expect(phone.host).to.equal("birdland:")
+      hostFromInside = phone.host
     })
 
     library.call("test-1", ["phone"], {phone: {host: "birdland:"}})
+
+    expect(hostFromInside).to.equal("birdland:")
   })
 })
