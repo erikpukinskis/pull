@@ -5,7 +5,7 @@ function TestReport(description, func) {
   this.func = func
 }
 TestReport.prototype.run = function() {
-  var report = {description: this.description}
+  var report = {description: this.description, success: true}
   try {
     this.func()
     return report
@@ -32,5 +32,14 @@ describe("a test that fails", function() {
 
   it('passes along the stack', function() { 
     expect(report.stack).to.match(/oops/)
+  })
+})
+
+describe("a test that passes", function() {
+  var report = new TestReport('passes', function() { 
+  }).run()
+
+  it('knows it was successful', function() {
+    expect(report.success).to.be.true
   })
 })
