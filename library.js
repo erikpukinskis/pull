@@ -6,6 +6,9 @@ Library.prototype.describe = function(name, deps, func) {
   this.libs[name] = func
 }
 Library.prototype.call = function(name, deps, injections) {
+  this.do(deps, injections, this.libs[name])
+}
+Library.prototype.do = function(deps, injections, func) {
   var args = []
   for(var i=0; i<deps.length; i++) {
     var dep = deps[i]
@@ -16,7 +19,7 @@ Library.prototype.call = function(name, deps, injections) {
     args.push(arg)
   }
 
-  this.libs[name].apply({}, args)
+  func.apply({}, args)
 }
 
 describe("a library with a library in it", function() {
@@ -33,5 +36,14 @@ describe("a library with a library in it", function() {
     library.call("test-1", ["phone"], {phone: {host: "birdland:"}})
 
     expect(hostFromInside).to.equal("birdland:")
+  })
+
+  it("can run functions without naming them", function() {
+    library = new Library()
+    var ran = false
+    library.do([], {}, function() {
+      ran = true
+    })
+    expect(ran).to.be.true
   })
 })
