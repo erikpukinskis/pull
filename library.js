@@ -22,8 +22,23 @@ Library.prototype.do = function(deps, injections, func) {
 
   func.apply({}, args)
 }
+Library.prototype.test = function(description, deps, func) {
+  var libs = this.libs
+  return picture(description, function(it, expect) {
+    var values = deps.map(function(dep) {
+      if (dep == 'it') {
+        return it
+      } else if (dep == 'expect') {
+        return expect
+      } else {
+        return libs[dep]()
+      }
+    })
+    return func.apply({}, values)
+  })
+}
 
-picture.out("Library", function(it, expect) {
+picture("Library", function(it, expect) {
   it("passes data to a function's dependencies when you call it", function() {
     var library = new Library()
 
@@ -40,7 +55,7 @@ picture.out("Library", function(it, expect) {
   })
 
   it("can run functions without naming them", function() {
-    library = new Library()
+    var library = new Library()
     var ran = false
     library.do([], {}, function() {
       ran = true
@@ -49,7 +64,7 @@ picture.out("Library", function(it, expect) {
   })
 
   it("passes in dependencies", function() {
-    library = new Library()
+    var library = new Library()
     library.describe("sandwich", [], function() { return "yummy" })
     var sandwichFromInside
     library.do(["sandwich"], {}, function(sandwich) {
@@ -59,21 +74,19 @@ picture.out("Library", function(it, expect) {
   })
 })
 
-picture.out("... running a test", function(it, expect) {
+picture(" ..running a test", function(it, expect) {
   library = new Library()
   library.describe("hatchery", [], function() { return "pengwings"})
-  var report = library.test()
-  // var report = library.test("Hatching", ["it", "hatchery", "expect"], 
-  //  function(it, hatchery, expect) {
-  //   it("hatches pengwings", function() {
-  //     expect(hatchery()).to.equal("pengwings")
-  //   })
-  // })
+  var report = library.test('Hatchery seems ok', ['it'], function(it) {
+    it('hatches pengwings', function(){})
+  })
 
-  it("tests for pengwings", function() {
+  it('includes a test result', function() {
     expect(report.tests).to.have.length(1)
+  })
+
+  it("knows it was pengwings", function() {
     expect(report.tests[0].description).to.equal("hatches pengwings")
-    expect(reports.tests[0].success).to.be.true
   })
 })
 
