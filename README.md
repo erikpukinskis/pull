@@ -1,2 +1,4 @@
-# pull
-so future
+# Running tests
+
+    npm install
+    mocha library.js
