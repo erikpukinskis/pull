@@ -1,4 +1,4 @@
-var expect = require ("chai").expect
+var chai = require ("chai")
 require('colors')
 
 function testReport(description, func) {
@@ -22,7 +22,7 @@ function picture(suiteDescription, suite) {
   }
 
   var report = testReport(suiteDescription, function() {
-    suite(it)
+    suite(it, chai.expect)
   })
 
   report.tests = tests.map(function(test) {
@@ -44,13 +44,13 @@ picture.out = function() {
 }
 
 
-picture.out("a test that fails", function(it) {
+picture.out("a test that fails", function(it, expect) {
   var report = testReport("throws an error", function() { 
     throw new Error("oops") 
   })
 
   it("includes test description", function() { 
-    expect(report.description).to.equal("throws an errr") 
+    expect(report.description).to.equal("throws an error") 
   })
 
   it("knows the test failed", function() { 
@@ -62,7 +62,7 @@ picture.out("a test that fails", function(it) {
   })
 })
 
-picture.out("a test that passes", function(it) {
+picture.out("a test that passes", function(it, expect) {
   var report = testReport("passes", function() { 
   })
 
@@ -71,7 +71,7 @@ picture.out("a test that passes", function(it) {
   })
 })
 
-picture.out("different it blocks", function(it) {
+picture.out("different it blocks", function(it, expect) {
   var report = picture("a sandwich", function(it) {
     var sandwich = {ingredients: ["avocado"]}
     it("has one ingredient", function() {
