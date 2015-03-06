@@ -1,11 +1,18 @@
-# Running tests
+### Running tests
 
     npm install
-    node test.js
 
-# Stack
+The main tests are temporarily broken
 
- - [ ] Re-enable library tests
+    # node test.js
+
+But the next action is is Library:
+
+    node library.js 
+
+### Stack
+
+ - [x] Re-enable library tests
  - [ ] Implement library.inject
  - [ ] Get the new test.js to run
  - [ ] Inject the logger so it's easier to turn tests on and off

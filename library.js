@@ -4,12 +4,15 @@ function Library() {
   this.id = Math.floor(Math.random()*100)
   this.libs = {}
 }
+
 Library.prototype.describe = function(name, deps, func) {
   this.libs[name] = func
 }
+
 Library.prototype.call = function(name, deps, injections) {
   this.do(deps, injections, this.libs[name])
 }
+
 Library.prototype.do = function(deps, injections, func) {
   var args = []
   for(var i=0; i<deps.length; i++) {
@@ -29,6 +32,7 @@ Library.prototype.do = function(deps, injections, func) {
 
   func.apply({}, args)
 }
+
 Library.prototype.test = function(description, deps, func) {
   var libs = this.libs
   return picture(description, function(it, expect) {
@@ -45,7 +49,7 @@ Library.prototype.test = function(description, deps, func) {
   })
 }
 
-picture("Library", function(it, expect) {
+picture.out("Library", function(it, expect) {
   it("passes data to a function's dependencies when you call it", function() {
     var library = new Library()
 
@@ -81,7 +85,7 @@ picture("Library", function(it, expect) {
   })
 })
 
-picture(" ..running a test", function(it, expect) {
+picture.out(" ..running a test", function(it, expect) {
   library = new Library()
   library.describe("hatchery", [], function() { return "pengwings"})
   var report = library.test('Hatchery seems ok', ['it'], function(it) {
